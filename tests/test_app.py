@@ -11,7 +11,7 @@ def app():
 def test_window_creation(app):
     assert isinstance(app.root, tk.Tk)
     assert app.root.title() == "Certus milling machine App"
-    assert app.root.geometry() == "500x300+100+100"
+    assert app.root.geometry() == "300x200+100+100"
     
 def test_frame_existence(app):
     assert isinstance(app.dfc_name, tk.Frame)
