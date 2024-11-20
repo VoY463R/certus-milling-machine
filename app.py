@@ -7,36 +7,30 @@ class MyApp:
         self.root.title("Certus milling machine App")
         self.root.geometry("300x200+100+100")
 
-        self.root.rowconfigure(0, weight=1)
-        self.root.rowconfigure(1, weight=1)
-        self.root.rowconfigure(2, weight=1)
-        self.root.rowconfigure(3, weight=1)
+        for i in range(0,4):
+            self.root.rowconfigure(i, weight=1)
         self.root.columnconfigure(0, weight=1)
 
         self.dfc_name = tk.Frame(self.root)
         self.dfc_name.grid(row=0, column=0, sticky="nsew")
-
-        self.amount_of_dfc = tk.Frame(self.root)
-        self.amount_of_dfc.grid(row=1, column=0, sticky="nsew")
-
-        self.top_bot = tk.Frame(self.root)
-        self.top_bot.grid(row=2, column=0, sticky="nsew")
-
-        self.buttons = tk.Frame(self.root)
-        self.buttons.grid(row=3, column=0, sticky="nsew")
-
         self.dfc_name.columnconfigure(0, weight=1)
         self.dfc_name.columnconfigure(1, weight=1)
         self.dfc_name.rowconfigure(0, weight=1)
 
+        self.amount_of_dfc = tk.Frame(self.root)
+        self.amount_of_dfc.grid(row=1, column=0, sticky="nsew")
         self.amount_of_dfc.columnconfigure(0, weight=1)
         self.amount_of_dfc.columnconfigure(1, weight=1)
         self.amount_of_dfc.rowconfigure(0, weight=1)
 
+        self.top_bot = tk.Frame(self.root)
+        self.top_bot.grid(row=2, column=0, sticky="nsew")
         self.top_bot.columnconfigure(0, weight=1)
         self.top_bot.columnconfigure(1, weight=1)
         self.top_bot.rowconfigure(0, weight=1)
-
+        
+        self.buttons = tk.Frame(self.root)
+        self.buttons.grid(row=3, column=0, sticky="nsew")
         self.buttons.columnconfigure(0, weight=1)
         self.buttons.columnconfigure(1, weight=1)
         self.buttons.columnconfigure(2, weight=1)
