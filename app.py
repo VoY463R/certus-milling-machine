@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+from app_func import create_list
 
 
 class MyApp:
@@ -7,7 +9,7 @@ class MyApp:
         self.root.title("Certus milling machine App")
         self.root.geometry("300x200+100+100")
 
-        for i in range(0,4):
+        for i in range(0, 4):
             self.root.rowconfigure(i, weight=1)
         self.root.columnconfigure(0, weight=1)
 
@@ -28,14 +30,15 @@ class MyApp:
         self.top_bot.columnconfigure(0, weight=1)
         self.top_bot.columnconfigure(1, weight=1)
         self.top_bot.rowconfigure(0, weight=1)
-        
+
         self.buttons = tk.Frame(self.root)
         self.buttons.grid(row=3, column=0, sticky="nsew")
         self.buttons.columnconfigure(0, weight=1)
         self.buttons.columnconfigure(1, weight=1)
         self.buttons.columnconfigure(2, weight=1)
         self.buttons.rowconfigure(0, weight=1)
-        
+        self.buttons.rowconfigure(1, weight=1)
+
         self.check_top = tk.IntVar()
         self.check_bot = tk.IntVar()
 
@@ -49,7 +52,7 @@ class MyApp:
 
         self.dfc_amount_label = tk.Label(self.amount_of_dfc, text="DFC Amount:")
         self.dfc_amount_label.grid(column=0, row=0, padx=5, pady=5, sticky="nw")
-        self.spinbox_amount = tk.Spinbox(self.amount_of_dfc, from_=0, to=10)
+        self.spinbox_amount = tk.Spinbox(self.amount_of_dfc, from_=1, to=10)
         self.spinbox_amount.grid(column=1, row=0, padx=5, pady=5, sticky="ne")
 
         self.top = tk.Checkbutton(self.top_bot, text="Top", variable=self.check_top)
@@ -57,19 +60,20 @@ class MyApp:
         self.bot = tk.Checkbutton(self.top_bot, text="Bot", variable=self.check_bot)
         self.bot.grid(column=1, row=0, padx=5, pady=5, sticky="nsew")
 
-        self.map = tk.Button(self.buttons, text="Map", command=self.start_map)
-        self.map.grid(column=0, row=0, padx=5, pady=5, sticky="nsew")
+        self.dfc_list_button = tk.Button(
+            self.buttons, text="Generate DFC list", command=self.create_list
+        )
+        self.dfc_list_button.grid(columnspan=3, row=0, padx=5, pady=5, sticky="nsew")
+        self.map = tk.Button(self.buttons, text="Map")
+        self.map.grid(column=0, row=1, padx=5, pady=5, sticky="nsew")
         self.milling = tk.Button(self.buttons, text="Milling")
-        self.milling.grid(column=1, row=0, padx=5, pady=5, sticky="nsew")
+        self.milling.grid(column=1, row=1, padx=5, pady=5, sticky="nsew")
         self.position = tk.Button(self.buttons, text="Set Position")
-        self.position.grid(column=2, row=0, padx=5, pady=5, sticky="nsew")
+        self.position.grid(column=2, row=1, padx=5, pady=5, sticky="nsew")
 
-    def start_map(self):
-        self.dfc_name = self.dfc_name_entry.get()
-        self.dfc_amount = self.spinbox_amount.get()
-        if self.dfc_name and self.dfc_amount:
-            pass
-        
+    def create_list(self):
+        self.dfc_list = create_list(self.dfc_name_entry, self.spinbox_amount, self.check_top, self.check_bot)
+        print(self.dfc_list)
 
     def run(self):
         self.root.mainloop()
