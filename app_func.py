@@ -1,6 +1,15 @@
 from tkinter import messagebox
 
 def create_list(dfc_name_entry, spinbox_amount, check_top, check_bot):
+    """
+    Functionality to create a list of dfc links for an application.
+
+    Args:
+        dfc_name_entry: _description_ Name of the fuel cell given in panel dfc_name_entry
+        spinbox_amount: _description_ Number of fuel cells to be included in the list
+        check_top: _description_ Marking the top surface of the fuel cell
+        check_bot: _description_ Marking the bot surface of the fuel cell
+    """
     dfc_list = []
     surface = ""
     dfc_name = dfc_name_entry.get()

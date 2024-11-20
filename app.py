@@ -5,6 +5,9 @@ from app_func import create_list
 
 class MyApp:
     def __init__(self) -> None:
+        """
+        Initialization of the application window with the configuration of frames.
+        """
         self.root = tk.Tk()
         self.root.title("Certus milling machine App")
         self.root.geometry("300x200+100+100")
@@ -45,6 +48,9 @@ class MyApp:
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        Creation of widgets responsible for providing the necessary data for milling machine processing.
+        """
         self.dfc_name_label = tk.Label(self.dfc_name_frame, text="First DFC name:")
         self.dfc_name_label.grid(column=0, row=0, padx=5, pady=5, sticky="nw")
         self.dfc_name_entry = tk.Entry(self.dfc_name_frame, width=30)
@@ -72,10 +78,16 @@ class MyApp:
         self.position.grid(column=2, row=1, padx=5, pady=5, sticky="nsew")
 
     def create_list(self):
+        """
+        Create a list of dfc cells based on the options selected in the application.
+        """
         self.dfc_list = create_list(self.dfc_name_entry, self.spinbox_amount, self.check_top, self.check_bot)
         print(self.dfc_list)
 
     def run(self):
+        """
+        Launching the Application GUI.
+        """
         self.root.mainloop()
 
 
