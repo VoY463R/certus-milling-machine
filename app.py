@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+import time
 from app_func import create_list
+from actions import PositionControl
 
 
 class MyApp:
@@ -44,6 +46,8 @@ class MyApp:
 
         self.check_top = tk.IntVar()
         self.check_bot = tk.IntVar()
+        
+        self.mouse_controlling = PositionControl()
 
         self.create_widgets()
 
@@ -66,23 +70,61 @@ class MyApp:
         self.bot = tk.Checkbutton(self.top_bot, text="Bot", variable=self.check_bot)
         self.bot.grid(column=1, row=0, padx=5, pady=5, sticky="nsew")
 
+        self.position_timer = tk.Label(self.buttons, text="")
+        self.position_timer.grid(columnspan=3, row=0, padx=5, pady=5, sticky="nsew")
+        
         self.dfc_list_button = tk.Button(
             self.buttons, text="Generate DFC list", command=self.create_list
         )
-        self.dfc_list_button.grid(columnspan=3, row=0, padx=5, pady=5, sticky="nsew")
-        self.map = tk.Button(self.buttons, text="Map")
-        self.map.grid(column=0, row=1, padx=5, pady=5, sticky="nsew")
+        self.dfc_list_button.grid(columnspan=3, row=1, padx=5, pady=5, sticky="nsew")
+        self.map = tk.Button(self.buttons, text="Map", command=self.mapping_proccess)
+        self.map.grid(column=0, row=2, padx=5, pady=5, sticky="nsew")
         self.milling = tk.Button(self.buttons, text="Milling")
-        self.milling.grid(column=1, row=1, padx=5, pady=5, sticky="nsew")
-        self.position = tk.Button(self.buttons, text="Set Position")
-        self.position.grid(column=2, row=1, padx=5, pady=5, sticky="nsew")
+        self.milling.grid(column=1, row=2, padx=5, pady=5, sticky="nsew")
+        self.position = tk.Button(self.buttons, text="Set Position", command=self.position_getter)
+        self.position.grid(column=2, row=2, padx=5, pady=5, sticky="nsew")
 
+    def position_getter(self):
+        """
+        Determine the position of the mouse cursor. Returns the value of x and y coordinates and writes to the variable mouse_position_x, mouse_position_y.
+        """
+        for i in range(5,0,-1):
+            self.position_timer.config(text=f"Determining the position for {i} sec")
+            self.root.update()
+            time.sleep(1)
+        self.mouse_position_x, self.mouse_position_y  = self.mouse_controlling.mouse_position()
+        messagebox.showinfo("Mouse Position", f"Position established: (x={self.mouse_position_x}, y={self.mouse_position_y})")
+        self.position_timer.config(text="")
+        
+    def mapping_proccess(self):
+        """
+        Call function for fuel cells mapping
+        """
+        try:
+            self.dfc_list
+            pass
+        except Exception as e:
+            messagebox.showerror("List error", f"There was a problem with the list of fuel cells: {e}")
+            return
+        self.mouse_controlling.mapping(self.dfc_list)
+            
+    def milling_proccess(self):
+        """
+        Call function for fuel cells milling
+        """
+        try:
+            self.dfc_list
+            pass
+        except Exception as e:
+            messagebox.showerror("List error", f"There was a problem with the list of fuel cells: {e}")
+            return
+        self.mouse_controlling.milling(self.dfc_list)
+            
     def create_list(self):
         """
         Create a list of dfc cells based on the options selected in the application.
         """
         self.dfc_list = create_list(self.dfc_name_entry, self.spinbox_amount, self.check_top, self.check_bot)
-        print(self.dfc_list)
 
     def run(self):
         """
