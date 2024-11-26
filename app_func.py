@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+import requests
 from tkinter import messagebox
 
 def create_list(dfc_name_entry, spinbox_amount, check_top, check_bot):
@@ -45,4 +47,15 @@ def create_list(dfc_name_entry, spinbox_amount, check_top, check_bot):
     except:
         messagebox.showerror(
             "List Creation Error", "There was an error while creating list"
-        )    
+        )
+        
+def motivating_quotes():
+    quotes_list = []
+    URL = "https://www.goodhousekeeping.com/health/wellness/g2401/inspirational-quotes/"
+    response = requests.get(URL)
+    soup = BeautifulSoup(response.content, "html.parser")
+    quotes = soup.find_all("p", class_="css-1nd4gv7 emevuu60")
+    for quote in quotes:
+        if '"' in quote.get_text():
+            quotes_list.append(quote.get_text().strip())
+    return quotes_list

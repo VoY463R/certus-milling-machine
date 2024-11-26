@@ -1,11 +1,14 @@
 import time
 from tkinter import messagebox
+from random import choice
 import pyautogui
+from app_func import motivating_quotes
 
 
 class PositionControl:
     def __init__(self) -> None:
         self.change_sheet = 195
+        self.quotes_list = motivating_quotes()
 
     def mouse_position(self):
         """
@@ -50,7 +53,7 @@ class PositionControl:
             )
             return
 
-        messagebox.showinfo("Mapping Finised", "Mapping process complete")
+        messagebox.showinfo("Mapping Finised", f"Mapping process complete\n{choice(self.quotes_list)}")
 
     def milling(self, dfc_list):
         """
@@ -100,5 +103,5 @@ class PositionControl:
             )
             return
 
-        messagebox.showinfo("Milling Finised", "Milling process complete")
+        messagebox.showinfo("Milling Finised", f"Milling process complete{choice(self.quotes_list)}")
         self.change_sheet = 195
